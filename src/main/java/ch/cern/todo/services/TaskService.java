@@ -24,21 +24,24 @@ public class TaskService {
     }
 
 
-    public void createTask(Task task) {
-       try {
-           if (task.getCategory() != null) {
-               // Récupérer la catégorie correspondant à l'ID donné
-               TaskCategory category = taskCategoryRepository.findById(task.getCategory().getCategoryId())
-                       .orElseThrow(() -> new NoSuchElementException("Category not found"));
-               // Associer la catégorie à la tâche
-               task.setCategory(category);
-           }
-
-           taskRepository.save(task);
-       }
-       catch (Exception e) {
-           System.out.println("Task creation failed");
-       }
+    public void createTask(Task task) throws NoSuchElementException {
+        try {
+            if (task.getCategory() != null) {
+                // Récupérer la catégorie correspondant à l'ID donné
+                TaskCategory category = taskCategoryRepository.findById(task.getCategory().getCategoryId())
+                        .orElseThrow(() -> new NoSuchElementException("Category not found"));
+                // Associer la catégorie à la tâche
+                task.setCategory(category);
+            }
+            taskRepository.save(task);
+        }
+        catch (NoSuchElementException e) {
+            System.out.println("Task creation failed: " + e.getMessage());
+            throw e;
+        }
+        catch (Exception e) {
+            System.out.println("Task creation failed");
+        }
     }
 
     public List<Task> getAllTasks(){
