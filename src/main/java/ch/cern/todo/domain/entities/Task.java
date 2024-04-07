@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 public class Task {
 
     @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long taskId;
 
     private String taskName;
@@ -15,9 +16,6 @@ public class Task {
     private String taskDescription;
 
     private Timestamp deadline;
-
-    private Long taskCategoryId;
-
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "categoryId")
@@ -54,14 +52,6 @@ public class Task {
 
     public void setDeadline(Timestamp deadline) {
         this.deadline = deadline;
-    }
-
-    public Long getTaskCategoryId() {
-        return taskCategoryId;
-    }
-
-    public void setTaskCategoryId(Long taskCategoryId) {
-        this.taskCategoryId = taskCategoryId;
     }
 
     public TaskCategory getCategory() {
