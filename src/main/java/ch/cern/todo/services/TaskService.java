@@ -1,6 +1,8 @@
 package ch.cern.todo.services;
 
 import ch.cern.todo.domain.entities.Task;
+import ch.cern.todo.domain.entities.TaskCategory;
+import ch.cern.todo.domain.repository.TaskCategoryRepository;
 import ch.cern.todo.domain.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +14,24 @@ import java.util.Optional;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final TaskCategoryRepository taskCategoryRepository;
 
-    public TaskService(TaskRepository taskRepository) {
+    public TaskService(TaskRepository taskRepository, TaskCategoryRepository taskCategoryRepository) {
         this.taskRepository = taskRepository;
+        this.taskCategoryRepository = taskCategoryRepository;
     }
 
 
     public void createTask(Task task) {
        try {
+           if (task.getCategory() != null) {
+               // Récupérer la catégorie correspondant à l'ID donné
+               TaskCategory category = taskCategoryRepository.findById(task.getCategory().getCategoryId())
+                       .orElseThrow(() -> new NoSuchElementException("Category not found"));
+               // Associer la catégorie à la tâche
+               task.setCategory(category);
+           }
+
            taskRepository.save(task);
        }
        catch (Exception e) {

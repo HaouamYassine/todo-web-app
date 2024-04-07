@@ -1,5 +1,7 @@
 package ch.cern.todo.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -61,4 +63,11 @@ public class Task {
     public void setCategory(TaskCategory category) {
         this.category = category;
     }
+
+    // Return only category Id for json purpose
+//    @JsonProperty("categoryId")
+//    public Long getCategoryId() {
+//        return category != null ? category.getCategoryId() : null;
+//    }
 }
+
