@@ -2,6 +2,7 @@ package ch.cern.todo.controllers;
 
 import ch.cern.todo.domain.entities.Task;
 import ch.cern.todo.services.TaskService;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +43,19 @@ public class TaskController {
         return ResponseEntity.ok(taskService.getTaskById(taskId));
     }
 
-
     //UPDATE
+    @PutMapping(value ="/{taskId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Task> updateTask(@PathVariable Long taskId, @RequestBody Task updatedTask) {
+        //Check if user entered an id in task body : if it's différent from given task id we return a bad call
+        if (updatedTask.getTaskId() != null && !updatedTask.getTaskId().equals(taskId)) {
+            return ResponseEntity.badRequest().build();
+        }
+        // Mettez à jour la tâche à l'aide du service
+        Task updated = taskService.updateTask(taskId, updatedTask);
+        return ResponseEntity.ok(updated);
+    }
+
+
 
     //DELETE
 
