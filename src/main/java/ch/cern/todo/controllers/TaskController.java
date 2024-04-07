@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,8 +56,15 @@ public class TaskController {
         return ResponseEntity.ok(updated);
     }
 
-
-
     //DELETE
-
+    @DeleteMapping(value ="/{taskId}")
+    public ResponseEntity<String> deleteTask(@PathVariable Long taskId){
+        try {
+            taskService.deleteTask(taskId);
+            return ResponseEntity.ok("Task with ID " + taskId + " has been deleted successfully.");
+        } catch (ResponseStatusException ex) {
+            // Renvoyer une réponse HTTP appropriée avec le message d'erreur
+            return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
+        }
+    }
 }
