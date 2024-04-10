@@ -11,5 +11,5 @@ Improvements possible:
 
 -If the use of the app need it, we can create DTOs and we will not manipulate the entity itself. (Then I rather use a modelmapper for the entity/dto conversion)
 -For this example, there was no need to make operations @Transactional 
--The deadline type is timestamp in the database, in Java, i personaly would prefer using LocalDateTime (but I still used timestamp in this todo web app)
+-The deadline type is timestamp in the database, in Java, i personally would prefer using LocalDateTime (but I still used timestamp in this todo web app)
 -Create exception classes and throw them whenever we need. (Ex: "task not found" can be repeated)
