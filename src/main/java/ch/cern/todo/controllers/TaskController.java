@@ -51,7 +51,7 @@ public class TaskController {
         if (updatedTask.getTaskId() != null && !updatedTask.getTaskId().equals(taskId)) {
             return ResponseEntity.badRequest().build();
         }
-        // Mettez à jour la tâche à l'aide du service
+        // Update task
         Task updated = taskService.updateTask(taskId, updatedTask);
         return ResponseEntity.ok(updated);
     }
@@ -63,7 +63,7 @@ public class TaskController {
             taskService.deleteTask(taskId);
             return ResponseEntity.ok("Task with ID " + taskId + " has been deleted successfully.");
         } catch (ResponseStatusException ex) {
-            // Renvoyer une réponse HTTP appropriée avec le message d'erreur
+            // If no task with the given id, we notify it in the response
             return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
         }
     }

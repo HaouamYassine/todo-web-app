@@ -111,12 +111,13 @@ class TaskServiceTest {
         Long taskId = 10L;
         // Mock
         when(taskRepository.findById(taskId)).thenReturn(Optional.empty());
-        // Call getTaskById
-        Optional<Task> returnedTask = taskService.getTaskById(taskId);
-        // VerifyfindById() is called
+        // Assert and verify
+        assertThrows(ResponseStatusException.class, () -> {
+            // Call getTaskById
+            taskService.getTaskById(taskId);
+        });
+        // Verify findById() is called
         verify(taskRepository, times(1)).findById(taskId);
-        // Assert
-        assertFalse(returnedTask.isPresent());
     }
 
     @Test

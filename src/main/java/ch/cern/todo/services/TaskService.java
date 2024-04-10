@@ -49,7 +49,12 @@ public class TaskService {
     }
 
     public Optional<Task> getTaskById(Long taskId){
-        return taskRepository.findById(taskId);
+        Optional<Task> taskOptional = taskRepository.findById(taskId);
+        if (taskOptional.isPresent()) {
+            return taskOptional;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found");
+        }
     }
 
     //Update
