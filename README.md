@@ -7,7 +7,7 @@ I also made unit tests using JUNIT. My TaskService has 100% coverage on methods,
 
 You will find the postman collection in the ressources folder, allowing you to test the creation, reading, update and delete of the tasks.
 
-Improvements possible:
+Possible improvments:
 
 -If the use of the app need it, we can create DTOs and we will not manipulate the entity itself. (Then I rather use a modelmapper for the entity/dto conversion)
 -For this example, there was no need to make operations @Transactional 
